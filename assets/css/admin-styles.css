@@ -1,0 +1,79 @@
+/**
+ * Content Freshness Alert - Admin Styles
+ * Version: 1.0.0
+ */
+
+/* Age Category Colors */
+.cfa-age-fresh {
+    color: #4CAF50; /* Green */
+    font-weight: 500;
+}
+
+.cfa-age-aging {
+    color: #FFC107; /* Yellow */
+    font-weight: 500;
+}
+
+.cfa-age-stale {
+    color: #FF9800; /* Orange */
+    font-weight: 600;
+}
+
+.cfa-age-very-stale {
+    color: #F44336; /* Red */
+    font-weight: 700;
+}
+
+.cfa-age-draft {
+    color: #999;
+    font-style: italic;
+}
+
+/* Dashboard Widget */
+.cfa-post-list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.cfa-post-list li {
+    padding: 8px 0;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.cfa-post-list li:last-child {
+    border-bottom: none;
+}
+
+.cfa-post-list a {
+    text-decoration: none;
+    color: #2271b1;
+}
+
+.cfa-post-list a:hover {
+    color: #135e96;
+}
+
+.cfa-age-text {
+    font-size: 0.9em;
+    opacity: 0.8;
+}
+
+/* List Table Column */
+.column-content_age {
+    width: 120px;
+}
+
+.column-content_age span {
+    display: inline-block;
+    padding: 3px 8px;
+    border-radius: 3px;
+    font-size: 12px;
+}
+
+/* Responsive */
+@media screen and (max-width: 782px) {
+    .column-content_age {
+        display: none; /* Hide on mobile - Screen Options still works */
+    }
+}

@@ -1,0 +1,60 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Content Freshness Alert 1.0.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-10-03 12:00+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Manual\n"
+
+#: content-freshness-alert.php:151
+msgid "📅 Content Freshness Alert"
+msgstr ""
+
+#: includes/class-dashboard-widget.php:45
+msgid "No posts found. Publish content to start monitoring."
+msgstr ""
+
+#: includes/class-list-table.php:44
+msgid "Content Age"
+msgstr ""
+
+#: includes/class-age-calculator.php:68
+msgid "Today"
+msgstr ""
+
+#: includes/class-age-calculator.php:70
+msgid "1 day ago"
+msgstr ""
+
+#: includes/class-age-calculator.php:73
+msgid "%d day ago"
+msgid_plural "%d days ago"
+msgstr[0] ""
+msgstr[1] ""
+
+#: includes/class-age-calculator.php:78
+msgid "%d month ago"
+msgid_plural "%d months ago"
+msgstr[0] ""
+msgstr[1] ""
+
+#: includes/class-age-calculator.php:83
+msgid "%s years ago"
+msgstr ""
+
+#: includes/class-dashboard-widget.php:85
+#: includes/class-list-table.php:70
+msgid "Last modified: %s"
+msgstr ""
