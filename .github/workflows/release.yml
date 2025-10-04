@@ -95,8 +95,13 @@ jobs:
           rm -rf .github/
           rm -f .gitignore
           
-          # Remove empty screenshots directory (will be added by WordPress.org)
-          rm -rf screenshots/
+          # Keep screenshots directory if it contains files, remove if empty
+          if [ -d "screenshots" ] && [ -z "$(ls -A screenshots)" ]; then
+            rm -rf screenshots/
+            echo "Removed empty screenshots directory"
+          else
+            echo "Keeping screenshots directory with files"
+          fi
           
           # Go back to root and recreate the clean ZIP
           cd ../../
