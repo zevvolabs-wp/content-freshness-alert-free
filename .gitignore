@@ -72,38 +72,38 @@ wp-content/advanced-cache.php
 wp-content/wp-cache-config.php
 
 # Plugin development specific
-/screenshots/*.png
-/screenshots/*.jpg
-/screenshots/*.gif
+# /screenshots/*.png
+# /screenshots/*.jpg
+# /screenshots/*.gif
 !screenshots/README.md
 
 # Documentation (keep essential, ignore generated)
-*.md
+# *.md
 !README.md
 !readme.txt
 
 # Development scripts
-bulk-test-data.php
-bulk-data*.sql
-bulk-data*.sh
-quick-test-setup.sh
-simple-setup.sh
-*-setup.sh
-*-data*.sh
+# bulk-test-data.php
+# bulk-data*.sql
+# bulk-data*.sh
+# quick-test-setup.sh
+# simple-setup.sh
+#   *-setup.sh
+# *-data*.sh
 
 # Testing guides
-*TESTING*.md
-*TEST*.md
-*GUIDE*.md
-*SUMMARY*.md
-*CHECKLIST*.md
-*STEP*.md
-*MANUAL*.md
-*BULK*.md
+# *TESTING*.md
+# *TEST*.md
+# *GUIDE*.md
+# *SUMMARY*.md
+# *CHECKLIST*.md
+# *STEP*.md
+# *MANUAL*.md
+# *BULK*.md
 
 # Development logs
-DEVELOPMENT_LOG.md
-PLUGIN_CHECK_RESULTS.md
+# DEVELOPMENT_LOG.md
+# PLUGIN_CHECK_RESULTS.md
 
 # Local development
 .env
