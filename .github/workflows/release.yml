@@ -9,6 +9,9 @@ jobs:
   build:
     name: Create Release
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      packages: write
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -112,8 +115,9 @@ jobs:
           echo "Generated MD5 checksum"
 
       - name: Upload Release
-        uses: softprops/action-gh-release@v1
+        uses: softprops/action-gh-release@v2
         with:
+          token: ${{ secrets.GITHUB_TOKEN }}
           tag_name: ${{ env.TAG_NAME }}
           name: Content Freshness Alert ${{ env.TAG_NAME }}
           body: |
@@ -122,6 +126,8 @@ jobs:
             ### What's New
             - Automated release build
             - WordPress.org submission ready
+            - Productivity-focused test data
+            - All validator issues resolved
             
             ### Installation
             1. Download the ZIP file below
