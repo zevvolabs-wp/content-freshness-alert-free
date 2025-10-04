@@ -12,6 +12,7 @@
  * License URI:       https://www.gnu.org/licenses/gpl-2.0.html
  * Text Domain:       content-freshness-alert
  * Domain Path:       /languages
+ * Donate link:       https://ko-fi.com/zevvolabs
  *
  * @package ContentFreshnessAlert
  */

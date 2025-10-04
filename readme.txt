@@ -221,7 +221,11 @@ For professional support, custom development, or enterprise implementations, ple
 **Support Development:**
 
 If you find this plugin helpful, consider supporting its development:
-- [Buy me a coffee](https://ko-fi.com/zevvolabs)
+
+* **☕ Buy me a coffee**: [Support on Ko-fi](https://ko-fi.com/zevvolabs)
+* **💝 One-time donation**: Help fund future updates and improvements
+* **⭐ Rate the plugin**: Leave a 5-star review on WordPress.org
+* **🐛 Report bugs**: Help improve the plugin by reporting issues
 
 == Privacy Policy ==
 
