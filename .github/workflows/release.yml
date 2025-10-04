@@ -2,6 +2,8 @@ on:
   push:
     tags:
       - "*"
+    branches:
+      - master
 
 name: Create and Publish Release
 
@@ -13,8 +15,10 @@ jobs:
       contents: write
       packages: write
     steps:
-      - name: Checkout code
+      - name: Checkout master branch
         uses: actions/checkout@v4
+        with:
+          ref: master
       
       - name: Get Repo Name
         id: get_repo_name
