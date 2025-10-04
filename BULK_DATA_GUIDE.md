@@ -1,20 +1,34 @@
-# Bulk Test Data Guide
+# Bulk Test Data Guide - Productivity & Time Management Focus
 
-## 🚀 Generate Large Amount of Test Data
+## 🚀 Generate Meaningful Test Data
 
-This guide helps you create a large number of test posts with varying ages to thoroughly test the Content Freshness Alert plugin.
+This guide helps you create meaningful test posts focused on **Productivity & Time Management** topics with varying ages to thoroughly test the Content Freshness Alert plugin.
 
 ## 📊 Test Data Distribution
 
-We'll create **100 test posts** with the following age distribution:
+We'll create **27 test posts** with the following age distribution:
 
-- **🟢 Very Fresh (0-30 days)**: 25 posts
-- **🟡 Fresh (31-180 days)**: 30 posts  
-- **🟠 Aging (181-365 days)**: 25 posts
-- **🔴 Stale (366-730 days)**: 15 posts
+- **🟢 Very Fresh (0-30 days)**: 10 posts
+- **🟡 Fresh (31-180 days)**: 7 posts  
+- **🟠 Aging (181-365 days)**: 5 posts
+- **🔴 Stale (366-730 days)**: 5 posts
 - **🔴 Very Stale (731+ days)**: 5 posts
 
-Plus **10 test pages** with varying ages.
+Plus **5 test pages** with varying ages.
+
+## 🎯 Content Focus: Productivity & Time Management
+
+All test content is focused on meaningful productivity and time management topics including:
+- Pomodoro Technique
+- Time Blocking
+- Eisenhower Matrix
+- Digital Minimalism
+- Deep Work
+- Getting Things Done (GTD)
+- Habit Stacking
+- Focus Techniques
+- Goal Setting
+- Work-Life Balance
 
 ## 🛠️ Method 1: WordPress Admin Interface (Recommended)
 
@@ -129,24 +143,24 @@ Create 10 pages with varying ages:
 ### Dashboard Widget Should Show:
 ```
 📅 Content Freshness Alert
-🔴 Ancient Article 5 (1,500 days old)
-🔴 Ancient Article 4 (1,200 days old)
-🔴 Ancient Article 3 (1,000 days old)
-🔴 Ancient Article 2 (800 days old)
-🔴 Ancient Article 1 (731 days old)
-🟠 Old Tutorial 15 (730 days old)
-🟠 Old Tutorial 14 (700 days old)
-🟠 Old Tutorial 13 (650 days old)
-🟠 Old Tutorial 12 (600 days old)
-🟠 Old Tutorial 11 (550 days old)
+🔴 The Fundamentals of Time Management (1,500 days old)
+🔴 Building Sustainable Productivity Habits (1,200 days old)
+🔴 The Psychology of Peak Performance (1,000 days old)
+🔴 Mastering the Art of Focus (800 days old)
+🔴 The Productivity Revolution (731 days old)
+🟠 The Future of Work: Remote Productivity (730 days old)
+🟠 Stress Management: Keeping Calm (600 days old)
+🟠 The Power of Systems: Automate Success (500 days old)
+🟠 Building a Second Brain (400 days old)
+🟠 The Myth of Multitasking (366 days old)
 ```
 
 ### Posts List Should Show:
-- 100 posts total
+- 27 productivity-focused posts total
 - "Content Age" column visible
 - Sortable by age
 - Color coding applied correctly
-- Pagination working (10 posts per page)
+- Meaningful, engaging content titles
 
 ## 🚨 Troubleshooting
 
@@ -173,42 +187,74 @@ Create 10 pages with varying ages:
 
 ## 🧹 Cleanup (Optional)
 
-### Remove All Test Posts
+### Remove All Productivity Test Posts
 ```sql
 -- Run this in phpMyAdmin
 DELETE FROM wp_posts 
 WHERE post_type = 'post' 
-AND post_title LIKE '%Recent Blog Post%'
-OR post_title LIKE '%Monthly Newsletter%'
-OR post_title LIKE '%Quarterly Report%'
-OR post_title LIKE '%Old Tutorial%'
-OR post_title LIKE '%Ancient Article%';
+AND (post_title LIKE '%Pomodoro%'
+OR post_title LIKE '%Time Blocking%'
+OR post_title LIKE '%Eisenhower%'
+OR post_title LIKE '%Digital Minimalism%'
+OR post_title LIKE '%Two-Minute Rule%'
+OR post_title LIKE '%Deep Work%'
+OR post_title LIKE '%Getting Things Done%'
+OR post_title LIKE '%Morning Routines%'
+OR post_title LIKE '%Power of Saying No%'
+OR post_title LIKE '%Batch Processing%'
+OR post_title LIKE '%Habit Stacking%'
+OR post_title LIKE '%80/20 Rule%'
+OR post_title LIKE '%Energy Management%'
+OR post_title LIKE '%Single-Tasking%'
+OR post_title LIKE '%Power of Deadlines%'
+OR post_title LIKE '%Work-Life Balance%'
+OR post_title LIKE '%Compound Effect%'
+OR post_title LIKE '%Psychology of Procrastination%'
+OR post_title LIKE '%Mind Mapping%'
+OR post_title LIKE '%Science of Motivation%'
+OR post_title LIKE '%Decision Fatigue%'
+OR post_title LIKE '%Art of Delegation%'
+OR post_title LIKE '%Myth of Multitasking%'
+OR post_title LIKE '%Building a Second Brain%'
+OR post_title LIKE '%Power of Systems%'
+OR post_title LIKE '%Stress Management%'
+OR post_title LIKE '%Future of Work%'
+OR post_title LIKE '%Productivity Revolution%'
+OR post_title LIKE '%Mastering the Art of Focus%'
+OR post_title LIKE '%Psychology of Peak Performance%'
+OR post_title LIKE '%Building Sustainable Productivity%'
+OR post_title LIKE '%Fundamentals of Time Management%');
 ```
 
-### Remove Test Pages
+### Remove Productivity Test Pages
 ```sql
 -- Run this in phpMyAdmin
 DELETE FROM wp_posts 
 WHERE post_type = 'page' 
-AND post_title LIKE '%Test Page%';
+AND (post_title LIKE '%Productivity Resources%'
+OR post_title LIKE '%Time Management Fundamentals%'
+OR post_title LIKE '%Focus and Concentration%'
+OR post_title LIKE '%Goal Setting%'
+OR post_title LIKE '%Work-Life Balance%');
 ```
 
 ## ✅ Success Criteria
 
-- [ ] 100 test posts created successfully
-- [ ] 10 test pages created successfully
-- [ ] Dashboard widget shows oldest posts
+- [ ] 27 productivity-focused test posts created successfully
+- [ ] 5 productivity-focused test pages created successfully
+- [ ] Dashboard widget shows oldest posts with meaningful titles
 - [ ] Posts list shows "Content Age" column
 - [ ] Pages list shows "Content Age" column
 - [ ] Color coding works correctly
 - [ ] Sorting works properly
 - [ ] Performance remains acceptable
 - [ ] No errors in debug.log
+- [ ] Content is engaging and realistic
 
 ## 🎯 Ready for Comprehensive Testing!
 
-With 100+ test posts, you can now thoroughly test:
-- Plugin performance with large datasets
+With 32 productivity-focused test posts and pages, you can now thoroughly test:
+- Plugin performance with meaningful content
 - Age calculation accuracy
 - Color coding consistency
 - Sorting functionality
@@ -216,5 +262,6 @@ With 100+ test posts, you can now thoroughly test:
 - List table performance
 - Memory usage
 - Database query efficiency
+- Realistic content presentation
 
-This bulk data will help ensure the plugin works perfectly before WordPress.org submission!
+This meaningful test data will help ensure the plugin works perfectly and provides a realistic demonstration for WordPress.org submission!

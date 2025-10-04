@@ -1,6 +1,6 @@
 === Content Freshness Alert ===
 Contributors: zevvolabs
-Tags: content, freshness, age, monitoring, seo, dashboard, posts, pages, content-management, content-strategy, blog-management, website-maintenance, content-audit, content-optimization, seo-tools, content-marketing, editorial-calendar, content-planning, website-health, content-quality
+Tags: content, seo, monitoring, dashboard, analytics
 Requires at least: 5.8
 Tested up to: 6.4
 Requires PHP: 7.4
@@ -8,7 +8,7 @@ Stable tag: 1.0.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
-Monitor content age and receive alerts for outdated posts needing updates. Dashboard widget shows oldest content with color-coded indicators. Essential SEO tool for content freshness management.
+Monitor content age and receive alerts for outdated posts needing updates. Dashboard widget shows oldest content with color-coded indicators.
 
 == Description ==
 
@@ -217,6 +217,11 @@ Initial release of Content Freshness Alert. This is a complete, production-ready
 **Professional Support:**
 
 For professional support, custom development, or enterprise implementations, please contact the plugin author directly.
+
+**Support Development:**
+
+If you find this plugin helpful, consider supporting its development:
+- [Buy me a coffee](https://ko-fi.com/zevvolabs)
 
 == Privacy Policy ==
 
