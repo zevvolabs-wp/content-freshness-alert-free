@@ -58,3 +58,55 @@ msgstr ""
 #: includes/class-list-table.php:70
 msgid "Last modified: %s"
 msgstr ""
+
+#: includes/class-dashboard-widget.php:157
+msgid "What is this?"
+msgstr ""
+
+#: includes/class-dashboard-widget.php:158
+msgid "This widget shows your oldest content that may need updating. Click any post to edit it."
+msgstr ""
+
+#: includes/class-dashboard-widget.php:162
+msgid "Fresh (0-6 months)"
+msgstr ""
+
+#: includes/class-dashboard-widget.php:163
+msgid "Aging (6-12 months)"
+msgstr ""
+
+#: includes/class-dashboard-widget.php:164
+msgid "Stale (1-2 years)"
+msgstr ""
+
+#: includes/class-dashboard-widget.php:165
+msgid "Very Stale (2+ years)"
+msgstr ""
+
+#: includes/class-dashboard-widget.php:194
+msgid "Posts Shown"
+msgstr ""
+
+#: includes/class-dashboard-widget.php:201
+msgid "Need Urgent Update"
+msgstr ""
+
+#: includes/class-dashboard-widget.php:209
+msgid "Aging Content"
+msgstr ""
+
+#: includes/class-dashboard-widget.php:222
+msgid "View All Posts"
+msgstr ""
+
+#: includes/class-dashboard-widget.php:223
+msgid "View All Pages"
+msgstr ""
+
+#: includes/class-dashboard-widget.php:53
+msgid "No posts found. Publish content to start monitoring."
+msgstr ""
+
+#: includes/class-dashboard-widget.php:54
+msgid "Create Your First Post"
+msgstr ""
