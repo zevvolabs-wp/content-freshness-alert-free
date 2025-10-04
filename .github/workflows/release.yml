@@ -91,8 +91,12 @@ jobs:
           # Remove development scripts directory
           rm -rf scripts/
           
-          # Create screenshots directory if it doesn't exist
-          mkdir -p screenshots/
+          # Remove Git and GitHub files (not needed in WordPress.org package)
+          rm -rf .github/
+          rm -f .gitignore
+          
+          # Remove empty screenshots directory (will be added by WordPress.org)
+          rm -rf screenshots/
           
           # Go back to root and recreate the clean ZIP
           cd ../../
