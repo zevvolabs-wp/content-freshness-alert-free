@@ -1,0 +1,156 @@
+name: Branch Management Workflow
+
+on:
+  push:
+    branches: [ develop, main ]
+  pull_request:
+    branches: [ develop, main, master ]
+
+jobs:
+  develop-to-main:
+    name: Deploy from develop to main
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/develop' && github.event_name == 'push'
+    steps:
+      - name: Checkout develop branch
+        uses: actions/checkout@v4
+        with:
+          ref: develop
+          fetch-depth: 0
+      
+      - name: Switch to main branch
+        run: |
+          git config --global user.name "GitHub Actions"
+          git config --global user.email "actions@github.com"
+          git checkout main
+          git pull origin main
+      
+      - name: Merge develop into main
+        run: |
+          git merge develop --no-ff -m "Merge develop into main - Staging release"
+          git push origin main
+      
+      - name: Update .gitignore for main branch
+        run: |
+          cp .gitignore-main .gitignore
+          git add .gitignore
+          git commit -m "Update .gitignore for main branch (production-focused)" || true
+          git push origin main
+
+  main-to-master:
+    name: Deploy from main to master
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+    steps:
+      - name: Checkout main branch
+        uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+      
+      - name: Switch to master branch
+        run: |
+          git config --global user.name "GitHub Actions"
+          git config --global user.email "actions@github.com"
+          git checkout master || git checkout -b master
+          git pull origin master || true
+      
+      - name: Merge main into master
+        run: |
+          git merge main --no-ff -m "Merge main into master - Production release"
+          git push origin master
+      
+      - name: Update .gitignore for master branch
+        run: |
+          cp .gitignore-master .gitignore
+          git add .gitignore
+          git commit -m "Update .gitignore for master branch (WordPress.org ready)" || true
+          git push origin master
+      
+      - name: Clean master branch for WordPress.org
+        run: |
+          # Remove development files
+          rm -f *.md *.sql *.sh bulk-test-data.php
+          rm -rf scripts/
+          rm -rf .github/
+          rm -f .gitignore
+          
+          # Keep only WordPress.org required files
+          git add -A
+          git commit -m "Clean master branch for WordPress.org submission" || true
+          git push origin master
+
+  create-release:
+    name: Create Release from master
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/master' && github.event_name == 'push'
+    steps:
+      - name: Checkout master branch
+        uses: actions/checkout@v4
+        with:
+          ref: master
+          fetch-depth: 0
+      
+      - name: Get Repo Name
+        id: get_repo_name
+        run: |
+          repo_fullname="${{ github.repository }}"
+          repo_name="${repo_fullname##*/}"
+          echo "REPO_NAME=${repo_name}" >> $GITHUB_ENV
+      
+      - name: Get Version
+        id: get_version
+        run: |
+          VERSION=$(grep "Version:" content-freshness-alert.php | sed 's/.*Version: *//')
+          echo "VERSION=${VERSION}" >> $GITHUB_ENV
+      
+      - name: Create WordPress.org Release Package
+        run: |
+          echo "Repository Name: $REPO_NAME"
+          echo "Version: $VERSION"
+          
+          # Create clean ZIP for WordPress.org
+          zip -r "${REPO_NAME}-${VERSION}.zip" . -x "*.git*" "*.md" "*.sql" "*.sh" "bulk-test-data.php" "scripts/*" ".github/*" ".gitignore"
+          
+          echo "Created WordPress.org release package: ${REPO_NAME}-${VERSION}.zip"
+      
+      - name: Generate Checksums
+        run: |
+          sha256sum "${REPO_NAME}-${VERSION}.zip" > "${REPO_NAME}-${VERSION}.zip.sha256"
+          md5sum "${REPO_NAME}-${VERSION}.zip" > "${REPO_NAME}-${VERSION}.zip.md5"
+      
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: v${{ env.VERSION }}
+          name: Content Freshness Alert v${{ env.VERSION }}
+          body: |
+            ## Content Freshness Alert v${{ env.VERSION }}
+            
+            ### WordPress.org Ready Package
+            - Clean ZIP file with only required files
+            - No development files included
+            - Ready for direct WordPress.org submission
+            
+            ### Installation
+            1. Download the ZIP file below
+            2. Upload to WordPress admin → Plugins → Add New → Upload Plugin
+            3. Activate the plugin
+            
+            ### Files Included
+            - Main plugin file
+            - Core functionality classes
+            - Admin styles and assets
+            - Language files
+            - Uninstall script
+            - WordPress.org readme.txt
+            
+            ### Checksums
+            - SHA256: `$(cat ${REPO_NAME}-${VERSION}.zip.sha256)`
+            - MD5: `$(cat ${REPO_NAME}-${VERSION}.zip.md5)`
+          files: |
+            ${{ env.REPO_NAME }}-${{ env.VERSION }}.zip
+            ${{ env.REPO_NAME }}-${{ env.VERSION }}.zip.sha256
+            ${{ env.REPO_NAME }}-${{ env.VERSION }}.zip.md5
+          draft: false
+          prerelease: false
