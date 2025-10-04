@@ -1,13 +1,13 @@
 <?php
 /**
  * Plugin Name:       Content Freshness Alert
- * Plugin URI:        https://zevvolabs.com/plugins/content-freshness-alert
+ * Plugin URI:        https://wordpress.org/plugins/content-freshness-alert/
  * Description:       Monitor content age and receive alerts for outdated posts needing updates. Dashboard widget shows oldest content with color-coded indicators.
  * Version:           1.0.0
  * Requires at least: 5.8
  * Requires PHP:      7.4
  * Author:            zevvolabs
- * Author URI:        https://zevvolabs.com
+ * Author URI:        https://profiles.wordpress.org/zevvolabs/
  * License:           GPL v2 or later
  * License URI:       https://www.gnu.org/licenses/gpl-2.0.html
  * Text Domain:       content-freshness-alert
