@@ -167,7 +167,7 @@ function cfa_register_widget() {
 
 #### FR-1.2: Oldest Content Display
 
-**Description**: Widget shall display the 10 oldest published posts/pages ordered by modification date.
+**Description**: Widget shall display the 25 oldest published posts/pages ordered by modification date with user guidance.
 
 **Priority**: CRITICAL
 
@@ -177,7 +177,7 @@ function cfa_register_widget() {
 $args = array(
     'post_type'      => array('post', 'page'),
     'post_status'    => 'publish',
-    'posts_per_page' => 10,
+    'posts_per_page' => 25,
     'orderby'        => 'modified',
     'order'          => 'ASC',
     'no_found_rows'  => true, // Performance optimization
@@ -194,27 +194,80 @@ $args = array(
 
 **Acceptance Criteria**:
 
-- Exactly 10 posts displayed (or fewer if <10 posts exist)
+- Exactly 25 posts displayed (or fewer if <25 posts exist)
 - Post titles truncated at 50 characters with "..." if longer
 - Edit links open post in editor (native WordPress behavior)
 - Age calculated from `post_modified` column
 - Results cached for 1 hour via transients
 
+#### FR-1.3: User Guidance and Help
+
+**Description**: Widget shall provide clear instructions and visual guidance to help users understand and use the widget effectively.
+
+**Priority**: HIGH
+
+**Acceptance Criteria**:
+
+- Help section with "What is this?" explanation and clear instructions
+- Color-coded legend showing age categories and time ranges:
+  - Fresh (0-6 months) - Green indicator
+  - Aging (6-12 months) - Yellow indicator  
+  - Stale (1-2 years) - Orange indicator
+  - Very Stale (2+ years) - Red indicator
+- Quick stats summary showing:
+  - Total number of oldest posts displayed
+  - Number of posts needing urgent update (very stale)
+- Action buttons linking to:
+  - "View All Posts" (edit.php)
+  - "View All Pages" (edit.php?post_type=page)
+- Empty state handling:
+  - Clear message when no posts exist
+  - "Create Your First Post" button linking to post-new.php
+
 **Example Output**:
 
 ```html
+<div class="cfa-help-section">
+    <p class="cfa-help-text">
+        <strong>What is this?</strong><br>
+        This widget shows your oldest content that may need updating. Click any post to edit it.
+    </p>
+    <div class="cfa-legend">
+        <span class="cfa-legend-item"><span class="cfa-age-fresh">●</span> Fresh (0-6 months)</span>
+        <span class="cfa-legend-item"><span class="cfa-age-aging">●</span> Aging (6-12 months)</span>
+        <span class="cfa-legend-item"><span class="cfa-age-stale">●</span> Stale (1-2 years)</span>
+        <span class="cfa-legend-item"><span class="cfa-age-very-stale">●</span> Very Stale (2+ years)</span>
+    </div>
+</div>
+
+<div class="cfa-stats">
+    <div class="cfa-stats-item">
+        <span class="cfa-stats-number">25</span>
+        <span class="cfa-stats-label">Oldest Posts</span>
+    </div>
+    <div class="cfa-stats-item cfa-stats-warning">
+        <span class="cfa-stats-number">3</span>
+        <span class="cfa-stats-label">Need Urgent Update</span>
+    </div>
+</div>
+
 <ul class="cfa-post-list">
     <li class="cfa-age-very-stale">
         <a href="[edit_link]">How to Use WordPress 2020</a>
         <span class="cfa-age-text">(1,245 days old)</span>
     </li>
 </ul>
+
+<div class="cfa-action-buttons">
+    <a href="[posts_url]" class="button button-secondary">View All Posts</a>
+    <a href="[pages_url]" class="button button-secondary">View All Pages</a>
+</div>
 ```
 
 
 ***
 
-#### FR-1.3: Widget Caching
+#### FR-1.4: Widget Caching
 
 **Description**: Widget content shall be cached to prevent performance impact.
 

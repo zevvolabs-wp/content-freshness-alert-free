@@ -31,6 +31,11 @@ class CFA_Age_Calculator {
      * @return int Age in days
      */
     public static function calculate_age($post_id) {
+        // Validate input
+        if (!is_numeric($post_id) || $post_id <= 0) {
+            return 0;
+        }
+        
         $post = get_post($post_id);
         
         if (!$post || $post->post_status !== 'publish') {
@@ -39,6 +44,12 @@ class CFA_Age_Calculator {
         
         $modified_time = strtotime($post->post_modified_gmt . ' GMT');
         $current_time = time();
+        
+        // Validate timestamps
+        if ($modified_time === false || $current_time === false) {
+            return 0;
+        }
+        
         $diff_seconds = $current_time - $modified_time;
         $age_days = floor($diff_seconds / DAY_IN_SECONDS);
         
@@ -102,10 +113,10 @@ class CFA_Age_Calculator {
      */
     public static function get_category_color($category) {
         $colors = array(
-            'fresh' => '#4CAF50',      // Green
-            'aging' => '#FFC107',      // Yellow
-            'stale' => '#FF9800',      // Orange
-            'very-stale' => '#F44336', // Red
+            'fresh' => '#2E7D32',      // Darker green for WCAG AA compliance
+            'aging' => '#B8860B',      // Darker yellow for WCAG AA compliance
+            'stale' => '#E65100',      // Darker orange for WCAG AA compliance
+            'very-stale' => '#C62828', // Darker red for WCAG AA compliance
         );
         
         return isset($colors[$category]) ? $colors[$category] : '#666666';
@@ -127,12 +138,41 @@ class CFA_Age_Calculator {
         
         $post_ids = get_posts($args);
         
+        // Error handling for get_posts
+        if (is_wp_error($post_ids)) {
+            error_log('CFA: Failed to get posts for age update - ' . $post_ids->get_error_message());
+            return;
+        }
+        
+        if (empty($post_ids)) {
+            return; // No posts to process
+        }
+        
+        $processed_count = 0;
+        $error_count = 0;
+        
         foreach ($post_ids as $post_id) {
-            $age_days = self::calculate_age($post_id);
-            $category = self::get_age_category($age_days);
-            
-            update_post_meta($post_id, '_cfa_age_days', $age_days);
-            update_post_meta($post_id, '_cfa_age_category', $category);
+            try {
+                $age_days = self::calculate_age($post_id);
+                $category = self::get_age_category($age_days);
+                
+                $meta_result1 = update_post_meta($post_id, '_cfa_age_days', $age_days);
+                $meta_result2 = update_post_meta($post_id, '_cfa_age_category', $category);
+                
+                if ($meta_result1 !== false && $meta_result2 !== false) {
+                    $processed_count++;
+                } else {
+                    $error_count++;
+                }
+            } catch (Exception $e) {
+                error_log('CFA: Error updating post ' . $post_id . ' - ' . $e->getMessage());
+                $error_count++;
+            }
+        }
+        
+        // Log results
+        if ($error_count > 0) {
+            error_log("CFA: Age update completed - {$processed_count} successful, {$error_count} errors");
         }
         
         // Clear dashboard cache to reflect updates
@@ -145,6 +185,11 @@ class CFA_Age_Calculator {
      * @param int $post_id Post ID
      */
     public function update_single_post($post_id) {
+        // Validate input
+        if (!is_numeric($post_id) || $post_id <= 0) {
+            return;
+        }
+        
         if (wp_is_post_revision($post_id)) {
             return;
         }
@@ -154,14 +199,18 @@ class CFA_Age_Calculator {
             return;
         }
         
-        $age_days = self::calculate_age($post_id);
-        $category = self::get_age_category($age_days);
-        
-        update_post_meta($post_id, '_cfa_age_days', $age_days);
-        update_post_meta($post_id, '_cfa_age_category', $category);
-        
-        // Clear dashboard cache
-        delete_transient('cfa_dashboard_widget_data');
+        try {
+            $age_days = self::calculate_age($post_id);
+            $category = self::get_age_category($age_days);
+            
+            update_post_meta($post_id, '_cfa_age_days', $age_days);
+            update_post_meta($post_id, '_cfa_age_category', $category);
+            
+            // Clear dashboard cache
+            delete_transient('cfa_dashboard_widget_data');
+        } catch (Exception $e) {
+            error_log('CFA: Error updating single post ' . $post_id . ' - ' . $e->getMessage());
+        }
     }
 
     /**
@@ -170,6 +219,11 @@ class CFA_Age_Calculator {
      * @param int $post_id Post ID
      */
     public function clear_cache($post_id) {
+        // Validate input
+        if (!is_numeric($post_id) || $post_id <= 0) {
+            return;
+        }
+        
         if (wp_is_post_revision($post_id)) {
             return;
         }

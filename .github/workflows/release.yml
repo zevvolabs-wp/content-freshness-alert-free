@@ -1,0 +1,165 @@
+on:
+  push:
+    tags:
+      - "*"
+
+name: Create and Publish Release
+
+jobs:
+  build:
+    name: Create Release
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Get Repo Name
+        id: get_repo_name
+        run: |
+          # Extract repo name from GITHUB_REPOSITORY variable
+          repo_fullname="${{ github.repository }}"
+          repo_name="${repo_fullname##*/}"
+          echo "REPO_NAME=${repo_name}" >> $GITHUB_ENV
+
+      - name: Get Tag Name
+        id: get_tag_name
+        run: |
+          # Extract tag or branch name from GITHUB_REF
+          tag_name="${{ github.ref }}"
+          tag_name="${tag_name#refs/tags/}"
+          echo "TAG_NAME=${tag_name}" >> $GITHUB_ENV
+
+      - name: Update Plugin Version
+        run: |
+          VERSION="${{ env.TAG_NAME }}"
+          VERSION=${VERSION#v}  # Remove 'v' prefix if present
+          
+          # Update version in main plugin file
+          MAIN_FILE="content-freshness-alert.php"
+          if [ -f "$MAIN_FILE" ]; then
+            sed -i "s/Version: [0-9.]*/Version: $VERSION/" "$MAIN_FILE"
+            echo "Updated version to $VERSION in $MAIN_FILE"
+          fi
+          
+          # Update version in readme.txt
+          if [ -f "readme.txt" ]; then
+            sed -i "s/Stable tag: [0-9.]*/Stable tag: $VERSION/" "readme.txt"
+            echo "Updated version to $VERSION in readme.txt"
+          fi
+
+      - name: Create Clean Release Package
+        run: |
+          echo "Repository Name: $REPO_NAME"
+          echo "Tag Name: $TAG_NAME"
+          
+          # Create a clean archive excluding development files
+          git archive --format zip --prefix="${REPO_NAME}/" --output "${REPO_NAME}-${TAG_NAME}.zip" HEAD
+          
+          # Extract the archive to clean it
+          unzip -q "${REPO_NAME}-${TAG_NAME}.zip" -d temp_extract/
+          
+          # Remove unwanted files from the extracted content
+          cd temp_extract/${REPO_NAME}/
+          
+          # Remove development files
+          rm -f bulk-test-data.php
+          rm -f bulk-data*.sql
+          rm -f bulk-data*.sh
+          rm -f quick-test-setup.sh
+          rm -f simple-setup.sh
+          rm -f *-setup.sh
+          rm -f *-data*.sh
+          
+          # Remove documentation files (keep only README.md and readme.txt)
+          find . -name "*.md" ! -name "README.md" ! -name "readme.txt" -delete
+          
+          # Remove testing guides
+          rm -f *TESTING*.md
+          rm -f *TEST*.md
+          rm -f *GUIDE*.md
+          rm -f *SUMMARY*.md
+          rm -f *CHECKLIST*.md
+          rm -f *STEP*.md
+          rm -f *MANUAL*.md
+          rm -f *BULK*.md
+          rm -f DEVELOPMENT_LOG.md
+          rm -f PLUGIN_CHECK_RESULTS.md
+          
+          # Remove development scripts directory
+          rm -rf scripts/
+          
+          # Create screenshots directory if it doesn't exist
+          mkdir -p screenshots/
+          
+          # Go back to root and recreate the clean ZIP
+          cd ../../
+          rm -f "${REPO_NAME}-${TAG_NAME}.zip"
+          cd temp_extract/
+          zip -r "../${REPO_NAME}-${TAG_NAME}.zip" "${REPO_NAME}/"
+          cd ../
+          rm -rf temp_extract/
+          
+          echo "Created clean release package: ${REPO_NAME}-${TAG_NAME}.zip"
+
+      - name: Generate Checksums
+        run: |
+          # Generate SHA256 checksum
+          sha256sum "${REPO_NAME}-${TAG_NAME}.zip" > "${REPO_NAME}-${TAG_NAME}.zip.sha256"
+          echo "Generated SHA256 checksum"
+          
+          # Generate MD5 checksum
+          md5sum "${REPO_NAME}-${TAG_NAME}.zip" > "${REPO_NAME}-${TAG_NAME}.zip.md5"
+          echo "Generated MD5 checksum"
+
+      - name: Upload Release
+        uses: softprops/action-gh-release@v1
+        with:
+          tag_name: ${{ env.TAG_NAME }}
+          name: Content Freshness Alert ${{ env.TAG_NAME }}
+          body: |
+            ## Content Freshness Alert ${{ env.TAG_NAME }}
+            
+            ### What's New
+            - Automated release build
+            - WordPress.org submission ready
+            
+            ### Installation
+            1. Download the ZIP file below
+            2. Upload to WordPress admin → Plugins → Add New → Upload Plugin
+            3. Activate the plugin
+            
+            ### Files Included
+            - Main plugin file
+            - Core functionality classes
+            - Admin styles and assets
+            - Language files
+            - Uninstall script
+            - WordPress.org readme.txt
+            
+            ### Checksums
+            - SHA256: `$(cat ${REPO_NAME}-${TAG_NAME}.zip.sha256)`
+            - MD5: `$(cat ${REPO_NAME}-${TAG_NAME}.zip.md5)`
+          files: |
+            ${{ env.REPO_NAME }}-${{ env.TAG_NAME }}.zip
+            ${{ env.REPO_NAME }}-${{ env.TAG_NAME }}.zip.sha256
+            ${{ env.REPO_NAME }}-${{ env.TAG_NAME }}.zip.md5
+          draft: false
+          prerelease: false
+
+      - name: Upload Release Artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: wordpress-plugin-release
+          path: |
+            ${{ env.REPO_NAME }}-${{ env.TAG_NAME }}.zip
+            ${{ env.REPO_NAME }}-${{ env.TAG_NAME }}.zip.sha256
+            ${{ env.REPO_NAME }}-${{ env.TAG_NAME }}.zip.md5
+          retention-days: 30
+
+      - name: Display Release Info
+        run: |
+          echo "🎉 Release created successfully!"
+          echo "Repository: $REPO_NAME"
+          echo "Tag: $TAG_NAME"
+          echo "ZIP file: ${REPO_NAME}-${TAG_NAME}.zip"
+          echo "Ready for WordPress.org submission!"

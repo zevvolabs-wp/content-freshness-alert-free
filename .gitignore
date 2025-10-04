@@ -1,0 +1,131 @@
+# WordPress Plugin Development .gitignore
+
+# Release files
+release/
+*.zip
+*.tar.gz
+
+# Development files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Node.js (if using build tools)
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+package-lock.json
+yarn.lock
+
+# PHP
+vendor/
+composer.lock
+.phpunit.result.cache
+
+# Testing
+/tests/
+phpunit.xml
+.phpunit.cache
+
+# Logs
+*.log
+logs/
+
+# Temporary files
+*.tmp
+*.temp
+.tmp/
+.temp/
+
+# Backup files
+*.bak
+*.backup
+*.old
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# WordPress specific
+wp-config.php
+wp-content/uploads/
+wp-content/cache/
+wp-content/backup-db/
+wp-content/advanced-cache.php
+wp-content/wp-cache-config.php
+
+# Plugin development specific
+/screenshots/*.png
+/screenshots/*.jpg
+/screenshots/*.gif
+!screenshots/README.md
+
+# Documentation (keep essential, ignore generated)
+*.md
+!README.md
+!readme.txt
+
+# Development scripts
+bulk-test-data.php
+bulk-data*.sql
+bulk-data*.sh
+quick-test-setup.sh
+simple-setup.sh
+*-setup.sh
+*-data*.sh
+
+# Testing guides
+*TESTING*.md
+*TEST*.md
+*GUIDE*.md
+*SUMMARY*.md
+*CHECKLIST*.md
+*STEP*.md
+*MANUAL*.md
+*BULK*.md
+
+# Development logs
+DEVELOPMENT_LOG.md
+PLUGIN_CHECK_RESULTS.md
+
+# Local development
+.env
+.env.local
+.env.development
+.env.test
+.env.production
+
+# Cache
+.cache/
+cache/
+
+# Build artifacts
+build/
+dist/
+
+# Coverage reports
+coverage/
+*.coverage
+.nyc_output
+
+# Miscellaneous
+*.pid
+*.seed
+*.pid.lock

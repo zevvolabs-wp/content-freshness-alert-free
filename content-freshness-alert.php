@@ -22,7 +22,8 @@ if (!defined('ABSPATH')) {
 }
 
 // Define constants
-define('CFA_VERSION', '1.0.0');
+$plugin_data = get_file_data(__FILE__, array('Version' => 'Version'));
+define('CFA_VERSION', $plugin_data['Version']);
 define('CFA_PLUGIN_DIR', plugin_dir_path(__FILE__));
 define('CFA_PLUGIN_URL', plugin_dir_url(__FILE__));
 define('CFA_THRESHOLD_FRESH', 180);      // 6 months

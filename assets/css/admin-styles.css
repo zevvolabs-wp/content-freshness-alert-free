@@ -3,29 +3,29 @@
  * Version: 1.0.0
  */
 
-/* Age Category Colors */
+/* Age Category Colors - WCAG AA Compliant */
 .cfa-age-fresh {
-    color: #4CAF50; /* Green */
+    color: #2E7D32; /* Darker green for better contrast */
     font-weight: 500;
 }
 
 .cfa-age-aging {
-    color: #FFC107; /* Yellow */
+    color: #B8860B; /* Darker yellow for better contrast */
     font-weight: 500;
 }
 
 .cfa-age-stale {
-    color: #FF9800; /* Orange */
+    color: #E65100; /* Darker orange for better contrast */
     font-weight: 600;
 }
 
 .cfa-age-very-stale {
-    color: #F44336; /* Red */
+    color: #C62828; /* Darker red for better contrast */
     font-weight: 700;
 }
 
 .cfa-age-draft {
-    color: #999;
+    color: #666666;
     font-style: italic;
 }
 
@@ -48,15 +48,115 @@
 .cfa-post-list a {
     text-decoration: none;
     color: #2271b1;
+    transition: color 0.2s ease;
 }
 
 .cfa-post-list a:hover {
     color: #135e96;
 }
 
+/* Focus states for accessibility */
+.cfa-post-list a:focus {
+    outline: 2px solid #2271b1;
+    outline-offset: 2px;
+    border-radius: 2px;
+}
+
 .cfa-age-text {
     font-size: 0.9em;
     opacity: 0.8;
+}
+
+/* Help Section */
+.cfa-help-section {
+    background: #f8f9fa;
+    border: 1px solid #e1e5e9;
+    border-radius: 4px;
+    padding: 12px;
+    margin-bottom: 15px;
+}
+
+.cfa-help-text {
+    margin: 0 0 10px 0;
+    font-size: 13px;
+    line-height: 1.4;
+}
+
+.cfa-legend {
+    font-size: 12px;
+    line-height: 1.3;
+}
+
+.cfa-legend-item {
+    display: inline-block;
+    margin-right: 8px;
+    margin-bottom: 4px;
+}
+
+.cfa-legend-item span {
+    font-weight: bold;
+    margin-right: 3px;
+}
+
+/* Quick Stats */
+.cfa-stats {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 15px;
+    padding: 10px;
+    background: #f8f9fa;
+    border-radius: 4px;
+}
+
+.cfa-stats-item {
+    text-align: center;
+    flex: 1;
+}
+
+.cfa-stats-number {
+    display: block;
+    font-size: 18px;
+    font-weight: bold;
+    color: #2271b1;
+}
+
+.cfa-stats-label {
+    display: block;
+    font-size: 11px;
+    color: #666;
+    margin-top: 2px;
+}
+
+.cfa-stats-warning .cfa-stats-number {
+    color: #C62828;
+}
+
+.cfa-stats-info .cfa-stats-number {
+    color: #B8860B;
+}
+
+/* Action Buttons */
+.cfa-action-buttons {
+    margin-top: 15px;
+    padding-top: 15px;
+    border-top: 1px solid #f0f0f0;
+    text-align: center;
+}
+
+.cfa-action-buttons .button {
+    margin: 0 5px 5px 0;
+    font-size: 12px;
+}
+
+/* Empty State */
+.cfa-empty-state {
+    text-align: center;
+    padding: 20px;
+}
+
+.cfa-empty-state p {
+    margin-bottom: 15px;
+    color: #666;
 }
 
 /* List Table Column */
@@ -69,11 +169,65 @@
     padding: 3px 8px;
     border-radius: 3px;
     font-size: 12px;
+    font-weight: 500;
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+    .cfa-age-fresh {
+        color: #1B5E20;
+        font-weight: 600;
+    }
+    
+    .cfa-age-aging {
+        color: #8B6914;
+        font-weight: 600;
+    }
+    
+    .cfa-age-stale {
+        color: #BF360C;
+        font-weight: 700;
+    }
+    
+    .cfa-age-very-stale {
+        color: #B71C1C;
+        font-weight: 800;
+    }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+    .cfa-post-list a {
+        transition: none;
+    }
 }
 
 /* Responsive */
 @media screen and (max-width: 782px) {
     .column-content_age {
         display: none; /* Hide on mobile - Screen Options still works */
+    }
+    
+    .cfa-post-list li {
+        padding: 6px 0;
+    }
+    
+    .cfa-age-text {
+        font-size: 0.85em;
+    }
+    
+    .cfa-stats {
+        flex-direction: column;
+        gap: 10px;
+    }
+    
+    .cfa-legend {
+        font-size: 11px;
+    }
+    
+    .cfa-action-buttons .button {
+        display: block;
+        width: 100%;
+        margin-bottom: 8px;
     }
 }
