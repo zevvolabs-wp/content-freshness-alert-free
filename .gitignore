@@ -1,5 +1,5 @@
-# WordPress Plugin Development .gitignore
-# For develop branch - includes development files
+# WordPress.org Plugin Submission .gitignore
+# For master branch - minimal, WordPress.org ready
 
 # WordPress core files
 wp-config.php
@@ -66,10 +66,34 @@ test-results/
 ehthumbs.db
 Thumbs.db
 
-# Keep these development files in develop branch:
-# - All *.md files (documentation)
-# - All *.sql files (test data)
-# - All *.sh files (scripts)
-# - bulk-test-data.php
-# - scripts/ directory
-# - All testing guides
+# Exclude ALL development files for master branch:
+*.md
+*.sql
+*.sh
+bulk-test-data.php
+scripts/
+*TESTING*.md
+*TEST*.md
+*GUIDE*.md
+*SUMMARY*.md
+*CHECKLIST*.md
+*STEP*.md
+*MANUAL*.md
+*BULK*.md
+DEVELOPMENT_LOG.md
+PLUGIN_CHECK_RESULTS.md
+RELEASE_WORKFLOW.md
+SOFTWARE_REQUIREMENTS_SPECIFICATION.md
+
+# Exclude Git/GitHub files for WordPress.org submission:
+.github/
+.gitignore
+
+# Keep only WordPress.org required files:
+# - content-freshness-alert.php
+# - includes/ directory
+# - assets/ directory  
+# - languages/ directory
+# - uninstall.php
+# - readme.txt
+# - screenshots/ directory (if contains files)
